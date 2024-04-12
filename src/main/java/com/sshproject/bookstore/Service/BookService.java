@@ -16,6 +16,8 @@ public class BookService implements BookServiceInterface{
     @Autowired
     private BookRepository bookRepository;
 
+
+
     //CREATE
     @Override
     public int addBook(Book book) {
@@ -74,6 +76,11 @@ public class BookService implements BookServiceInterface{
             return "Could not update book";
         }
     }
+
+//    @Override
+//    public List<Book> getBooksByAuthorId(int id) {
+//        return bookRepository.findByAuthor_id(id);
+//    }
 
 
 }

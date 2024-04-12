@@ -16,4 +16,6 @@ public interface BookServiceInterface {
 
     String updateBook(int id, Book book);
 
+//    List<Book> getBooksByAuthorId(int id);
+
 }
