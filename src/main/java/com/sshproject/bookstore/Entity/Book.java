@@ -9,7 +9,7 @@ import lombok.Setter;
 import javax.annotation.processing.Generated;
 
 @Entity
-//@Table(name = "new-table-name") - This annotation changes the table name. For us its not neccessary right now!
+@Table(name = "books")
 @Data //This annotation replaces @Getter, @Setter and @toString. :)
 @NoArgsConstructor
 public class Book {
