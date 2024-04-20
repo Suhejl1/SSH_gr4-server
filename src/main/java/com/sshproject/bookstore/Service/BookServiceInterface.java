@@ -16,6 +16,8 @@ public interface BookServiceInterface {
 
     String updateBook(int id, Book book);
 
-//    List<Book> getBooksByAuthorId(int id);
+    List<Book> getBooksByAuthorId(int id);
+
+    List<Book> getBooksByIds(List<Integer> ids);
 
 }

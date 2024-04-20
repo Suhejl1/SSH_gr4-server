@@ -40,15 +40,15 @@ public class AuthorController {
         return res;
     }
 
-//    @GetMapping("api/v1/authors/{id}/books")
-//    public ResponseEntity<List<Book>> getAuthorBooks(@PathVariable("id") int id) {
-//
-//        List<Book> books = authorService.getAuthorBooks(id);
-//        if(books.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }else{
-//            return ResponseEntity.ok().body(books);
-//        }
-//
-//    }
+    @GetMapping("api/v1/authors/{id}/books")
+    public ResponseEntity<List<Book>> getAuthorBooks(@PathVariable("id") int id) {
+
+        List<Book> books = authorService.getAuthorBooks(id);
+        if(books.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }else{
+            return ResponseEntity.ok().body(books);
+        }
+
+    }
 }
