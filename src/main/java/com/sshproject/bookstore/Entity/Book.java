@@ -13,12 +13,13 @@ import javax.annotation.processing.Generated;
 @Data //This annotation replaces @Getter, @Setter and @toString. :)
 @NoArgsConstructor
 public class Book {
-    public Book(String title, int author_id, String ISBN, int publisher, int year, String image, String description, int inventory_id) {
+    public Book(String title, int author_id, String ISBN, int publisher, int year,double price, String image, String description, int inventory_id) {
         this.title = title;
-        this.author_id = author_id;
+        this.authorId = author_id;
         this.ISBN = ISBN;
         this.publisher = publisher;
         this.year = year;
+        this.price = price;
         this.image = image;
         this.description = description;
         this.inventory_id = inventory_id;
@@ -32,11 +33,11 @@ public class Book {
 //    @Column(name="new-column-name", length = 512, nullable=false) - This annotation can change column properties, name, length and more
     private String title;
 
-    private int author_id;
+    private int authorId;
     private String ISBN;
     private int publisher;
 
-
+    private double price;
     private int year;
     private String image;
     private String description;

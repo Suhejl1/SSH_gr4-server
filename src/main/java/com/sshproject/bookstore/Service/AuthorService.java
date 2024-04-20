@@ -14,6 +14,8 @@ public class AuthorService implements AuthorServiceInterface{
 
     @Autowired
     private AuthorRepository authorRepository;
+    @Autowired
+    private BookServiceInterface bookService;
 
     @Override
     public int deleteAuthorById(int id) {
@@ -47,8 +49,8 @@ public class AuthorService implements AuthorServiceInterface{
         return null;
     }
 
-//    @Override
-//    public List<Book> getAuthorBooks(int id) {
-//        return bookService.getBooksByAuthorId(id);
-//    }
+    @Override
+    public List<Book> getAuthorBooks(int id) {
+        return bookService.getBooksByAuthorId(id);
+    }
 }

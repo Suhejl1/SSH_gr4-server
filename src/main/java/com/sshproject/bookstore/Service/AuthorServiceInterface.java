@@ -14,7 +14,7 @@ public interface AuthorServiceInterface {
 
     Optional<Author> getAuthorById(int id);
 
-//    List<Book> getAuthorBooks(int id);
+    List<Book> getAuthorBooks(int id);
 
 
 
