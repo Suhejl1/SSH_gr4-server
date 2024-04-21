@@ -17,38 +17,26 @@ public class AuthorController {
 
     @Autowired
     private AuthorServiceInterface authorService;
-    @GetMapping("api/v1/authors/{id}")
+    @GetMapping("api/v1/author/{id}")
     public Optional<Author> getAuthorById(@PathVariable("id") int id){
         Optional<Author> author = authorService.getAuthorById(id);
         return author;
     }
 
-    @PostMapping("api/v1/authors")
+    @PostMapping("api/v1/author")
     public int addAuthor(@RequestBody Author author){
         int res = authorService.addAuthor(author);
         return res;
     }
 
-    @GetMapping("api/v1/authors")
+    @GetMapping("api/v1/author")
     public List<Author> getAllAuthors(){
         return authorService.getAllAuthors();
     }
 
-    @DeleteMapping("api/v1/authors/{id}")
+    @DeleteMapping("api/v1/author/{id}")
     public int deleteAuthorById(@PathVariable("id") int id){
         int res = authorService.deleteAuthorById(id);
         return res;
     }
-
-//    @GetMapping("api/v1/authors/{id}/books")
-//    public ResponseEntity<List<Book>> getAuthorBooks(@PathVariable("id") int id) {
-//
-//        List<Book> books = authorService.getAuthorBooks(id);
-//        if(books.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }else{
-//            return ResponseEntity.ok().body(books);
-//        }
-//
-//    }
 }
