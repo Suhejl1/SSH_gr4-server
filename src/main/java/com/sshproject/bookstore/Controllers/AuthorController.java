@@ -17,24 +17,24 @@ public class AuthorController {
 
     @Autowired
     private AuthorServiceInterface authorService;
-    @GetMapping("api/v1/author/{id}")
+    @GetMapping("api/v1/authors/{id}")
     public Optional<Author> getAuthorById(@PathVariable("id") int id){
         Optional<Author> author = authorService.getAuthorById(id);
         return author;
     }
 
-    @PostMapping("api/v1/author")
+    @PostMapping("api/v1/authors")
     public int addAuthor(@RequestBody Author author){
         int res = authorService.addAuthor(author);
         return res;
     }
 
-    @GetMapping("api/v1/author")
+    @GetMapping("api/v1/authors")
     public List<Author> getAllAuthors(){
         return authorService.getAllAuthors();
     }
 
-    @DeleteMapping("api/v1/author/{id}")
+    @DeleteMapping("api/v1/authors/{id}")
     public int deleteAuthorById(@PathVariable("id") int id){
         int res = authorService.deleteAuthorById(id);
         return res;
