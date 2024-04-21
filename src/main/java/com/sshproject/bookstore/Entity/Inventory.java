@@ -14,6 +14,7 @@ public class Inventory {
         this.date_added = date_added;
         this.date_modified = date_modified;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

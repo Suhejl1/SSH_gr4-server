@@ -25,6 +25,7 @@ public class InventoryService implements InventoryServiceInterface{
             return inventoryOptional;
         }
         return null;
+
     }
 
     @Override

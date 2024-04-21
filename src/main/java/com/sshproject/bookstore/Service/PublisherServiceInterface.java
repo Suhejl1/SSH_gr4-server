@@ -9,4 +9,5 @@ public interface PublisherServiceInterface {
     Optional<Publisher> getPublisherById(int id);
     int savePublisher(Publisher publisher);
     int deletePublisherById(int id);
+
 }

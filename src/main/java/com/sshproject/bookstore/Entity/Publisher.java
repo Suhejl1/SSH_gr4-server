@@ -13,6 +13,7 @@ public class Publisher {
         this.name = name;
         this.location = location;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

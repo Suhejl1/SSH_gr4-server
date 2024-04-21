@@ -21,6 +21,7 @@ public class PublisherController {
         Optional<Publisher> publisher = publisherServiceInterface.getPublisherById(id);
         return publisher;
     }
+
     @PostMapping("api/v1/publisher")
     public int savePublisher(@RequestBody Publisher publisher){
         int result = publisherServiceInterface.savePublisher(publisher);

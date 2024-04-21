@@ -19,6 +19,7 @@ public class GenreController {
         return genre;
     }
 
+
     @PostMapping("api/v1/genre")
     public int saveGenre(@RequestBody Genre genre){
         int result = genreServiceInterface.saveGenre(genre);

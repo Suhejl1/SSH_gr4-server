@@ -10,4 +10,5 @@ public interface InventoryServiceInterface {
     Optional<Inventory> getInventoryById(int id);
     int saveInventory(Inventory inventory);
     int deleteInventoryById(int id);
+
 }

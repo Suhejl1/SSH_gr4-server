@@ -32,6 +32,7 @@ public class GenreService implements GenreServiceInterface{
         }
         return -1;
     }
+
     @Override
     public int saveGenre(Genre genre){
         Genre newGenre = new Genre(genre.getName());

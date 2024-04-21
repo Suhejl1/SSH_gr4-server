@@ -10,4 +10,5 @@ public interface GenreServiceInterface {
     Optional<Genre> getGenreById(int id);
     int saveGenre(Genre genre);
     int deleteGenreById(int id);
+
 }

@@ -23,6 +23,7 @@ public class InventoryController {
         return inventory;
     }
 
+
     @PostMapping("api/v1/inventory")
     public int saveInventory(@RequestBody Inventory inventory){
         int result = serviceInterface.saveInventory(inventory);
