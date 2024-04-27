@@ -21,8 +21,8 @@ public class BookService implements BookServiceInterface{
     //CREATE
     @Override
     public int addBook(Book book) {
-        Book new_book = new Book(book.getTitle(),book.getAuthor_id(),book.getISBN(),
-                book.getPublisher(),book.getYear(),book.getImage(),book.getDescription(),book.getInventory_id());
+        Book new_book = new Book(book.getTitle(),book.getAuthorId(),book.getISBN(),
+                book.getPublisher(),book.getYear(),book.getPrice(),book.getImage(),book.getDescription(),book.getInventory_id());
         bookRepository.save(new_book);
         return new_book.getId();
     }
@@ -77,10 +77,21 @@ public class BookService implements BookServiceInterface{
         }
     }
 
-//    @Override
-//    public List<Book> getBooksByAuthorId(int id) {
-//        return bookRepository.findByAuthor_id(id);
-//    }
+    @Override
+    public List<Book> getBooksByAuthorId(int id) {
+        return bookRepository.findByAuthorId(id);
+    }
+
+    @Override
+    public List<Book> getBooksByIds(List<Integer> ids) {
+        List<Book> bookResult = new ArrayList<>();
+        for(int id : ids){
+            Optional<Book> optionalBook = getBookById(id);
+            Book tempBook = optionalBook.orElse(null);
+            bookResult.add(tempBook);
+        }
+        return bookResult;
+    }
 
 
 }
