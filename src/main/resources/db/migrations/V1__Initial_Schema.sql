@@ -36,7 +36,7 @@ FOREIGN KEY (address_id) REFERENCES addresses(id)
 
  CREATE TABLE IF NOT EXISTS payment_type (
 id INTEGER AUTO_INCREMENT,
-value VARCHAR(250),
+payment_value VARCHAR(250),
 PRIMARY KEY (id)
 );
 
@@ -140,7 +140,7 @@ title VARCHAR(250),
 author_id INTEGER,
 isbn VARCHAR(250),
 publisher INTEGER,
-year YEAR,
+publishing_year SMALLINT,
 price DECIMAL,
 image BLOB,
 description VARCHAR(500),
@@ -199,11 +199,11 @@ FOREIGN KEY (order_id) REFERENCES shop_orders(id)
 
 CREATE TABLE IF NOT EXISTS shopping_cart_items (
 id INTEGER AUTO_INCREMENT,
-cart_id INTEGER,
+cartId INTEGER,
 product_item_id INTEGER,
 quantity INTEGER,
 PRIMARY KEY (id),
-FOREIGN KEY (cart_id) REFERENCES shoping_cart(id),
+FOREIGN KEY (cartId) REFERENCES shoping_cart(id),
 FOREIGN KEY (product_item_id) REFERENCES books(id)
 );
 

@@ -9,15 +9,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name="shopping_cart_items")
 public class Cart {
-    public Cart(int cart_id, int product_item_id, int quantity) {
-        this.cart_id = cart_id;
+    public Cart(int cartId, int product_item_id, int quantity) {
+        this.cartId = cartId;
         this.product_item_id = product_item_id;
         this.quantity = quantity;
     }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private int cart_id;
+    private int cartId;
     private int product_item_id;
     private int quantity;
 }
