@@ -1,22 +1,22 @@
-CREATE TABLE IF NOT EXISTS roles (
+CREATE TABLE IF NOT EXISTS role (
     id INTEGER,
     name VARCHAR(250),
-    description VARCHAR(50),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS premissions (
+CREATE TABLE IF NOT EXISTS ability (
     id INTEGER,
-    name VARCHAR(250),
-    description VARCHAR(250),
+    model_name VARCHAR(250),
+    verb VARCHAR(250),
+    field VARCHAR(250),
     PRIMARY KEY (id)
 );
 
-CREATE TABLE IF NOT EXISTS rolesAndPremssionsMapping(
+CREATE TABLE IF NOT EXISTS Role_Ability_Relationship(
     role_id INTEGER,
-    premission_id INTEGER,
-    PRIMARY KEY (role_id, premission_id),
-    FOREIGN KEY (role_id) REFERENCES roles(id),
-    FOREIGN KEY (premission_id) REFERENCES premissions(id)
+    ability_id INTEGER,
+    PRIMARY KEY (role_id, ability_id),
+    FOREIGN KEY (role_id) REFERENCES role(id),
+    FOREIGN KEY (ability_id) REFERENCES ability(id)
 );
 

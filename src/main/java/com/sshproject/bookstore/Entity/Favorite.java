@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Data
 @NoArgsConstructor
-@Table(name="favourties")
+@Table(name="favourites")
 
 public class Favorite {
     public Favorite(int user_id, int book_id) {
