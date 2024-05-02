@@ -21,7 +21,7 @@ class BookRepositoryTest {
     @Test
     public void testSaveBook(){
         //Given
-        Book book = new Book("Book1", 1,"123456789",1,2024,"","",1);
+        Book book = new Book("Book1", 1,"123456789",1,2024,10.2,"","",1);
 
         // When
         Book savedBook = bookRepository.save(book);

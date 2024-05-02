@@ -22,7 +22,7 @@ public class CartService implements CartServiceInterface {
 
     @Override
     public int addToCart(Cart cart) {
-        Cart newCartItem = new Cart(cart.getCart_id(), cart.getProduct_item_id(), cart.getQuantity());
+        Cart newCartItem = new Cart(cart.getCartId(), cart.getProduct_item_id(), cart.getQuantity());
         cartRepository.save(newCartItem);
         return newCartItem.getId();
     }

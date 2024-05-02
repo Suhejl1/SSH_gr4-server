@@ -22,7 +22,7 @@ public class BookService implements BookServiceInterface{
     @Override
     public int addBook(Book book) {
         Book new_book = new Book(book.getTitle(),book.getAuthorId(),book.getISBN(),
-                book.getPublisher(),book.getYear(),book.getPrice(),book.getImage(),book.getDescription(),book.getInventory_id());
+                book.getPublisher(),book.getPublishing_year(),book.getPrice(),book.getImage(),book.getDescription(),book.getInventory_id());
         bookRepository.save(new_book);
         return new_book.getId();
     }

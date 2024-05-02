@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS USERS (
+CREATE TABLE IF NOT EXISTS users (
 id INTEGER AUTO_INCREMENT,
 email_address VARCHAR(250),
 password VARCHAR(250),
@@ -36,7 +36,7 @@ FOREIGN KEY (address_id) REFERENCES addresses(id)
 
  CREATE TABLE IF NOT EXISTS payment_type (
 id INTEGER AUTO_INCREMENT,
-value VARCHAR(250),
+payment_value VARCHAR(250),
 PRIMARY KEY (id)
 );
 
@@ -110,10 +110,10 @@ name VARCHAR(250),
 PRIMARY KEY (id)
 );
 
- CREATE TABLE IF NOT EXISTS discounts (
+ CREATE TABLE IF NOT EXISTS discount (
 id INTEGER AUTO_INCREMENT,
 discount_code VARCHAR(250),
-discount_percentage DECIMAL,
+discount_percentage FLOAT,
 expire_date DATE,
 PRIMARY KEY (id)
 );
@@ -140,9 +140,9 @@ title VARCHAR(250),
 author_id INTEGER,
 isbn VARCHAR(250),
 publisher INTEGER,
-year YEAR,
-price DECIMAL,
-image BLOB,
+publishing_year INTEGER,
+price FLOAT NOT NULL,
+image VARCHAR(255),
 description VARCHAR(500),
 inventory_id INTEGER,
 PRIMARY KEY (id),
@@ -151,8 +151,16 @@ FOREIGN KEY (publisher) REFERENCES publishers(id),
 FOREIGN KEY (inventory_id) REFERENCES inventory(id)
 );
 
+CREATE TABLE IF NOT EXISTS book_tags (
+id INTEGER AUTO_INCREMENT,
+book_id INTEGER,
+tag_name VARCHAR(250),
+PRIMARY KEY (id),
+FOREIGN KEY (book_id) REFERENCES books(id)
+);
 
-CREATE TABLE IF NOT EXISTS favourties (
+
+CREATE TABLE IF NOT EXISTS favourites (
 id INTEGER AUTO_INCREMENT,
 user_id INTEGER,
 book_id INTEGER,

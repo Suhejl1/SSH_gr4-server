@@ -21,9 +21,9 @@ public class ReviewService implements ReviewServiceInterface {
 
     @Override
     public int addReview(Review review) {
-        Review newReview = new Review(review.getUser_id(), review.getOrdered_book_id(), review.getRating_value(), review.getComment());
+        Review newReview = new Review(review.getUserId(), review.getOrdered_book_id(), review.getRating_value(), review.getComment());
         reviewRepository.save(newReview);
-        return newReview.getUser_id(); // Or you can return newReview.getId() if it's the review ID you want to return
+        return newReview.getUserId(); // Or you can return newReview.getId() if it's the review ID you want to return
     }
 
     @Override
