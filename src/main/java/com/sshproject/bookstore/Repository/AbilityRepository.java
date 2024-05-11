@@ -9,4 +9,5 @@ import java.util.Optional;
 
 public interface AbilityRepository extends JpaRepository<Ability,Integer> {
     Optional<Ability> findByModelNameAndVerbAndField(String modelName, String verb, String field);
+    //After getting the Ability object we extract the ability id from it
 }

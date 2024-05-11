@@ -24,7 +24,10 @@ public class Ability {
     @Column(name = "model_name")
     private String modelName;
 
+    @Column(name="verb")
     private String verb;
+
+    @Column(name="field")
     private String field;
 
 

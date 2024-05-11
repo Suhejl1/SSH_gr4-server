@@ -33,10 +33,10 @@ public class RoleAbility {
 class RoleAbilityId implements Serializable {
 
     @Column(name = "role_id")
-    private Long roleId;
+    private int roleId;
 
     @Column(name = "ability_id")
-    private Long abilityId;
+    private int abilityId;
 
     // Constructors, getters, and setters
 }
