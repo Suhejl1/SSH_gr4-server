@@ -5,11 +5,11 @@ import com.sshproject.bookstore.Entity.OrderLine;
 import com.sshproject.bookstore.Repository.OrderLineRepository;
 import com.sshproject.bookstore.Repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class OrderService implements OrderServiceInterface{
 
     @Autowired
@@ -24,21 +24,21 @@ public class OrderService implements OrderServiceInterface{
     }
 
     @Override
-    public void placeOrder(int userId, LocalDate orderDate, int paymentMethodId, int shippingAddressId, BigDecimal orderTotal, int orderStatusId, List<OrderLine> orderLines) {
-        // Create a new Order instance
-        Order order = new Order(userId, orderDate, paymentMethodId, shippingAddressId, orderTotal);
-
-        // Save the Order to the database
+    public Order placeOrder(Order order) {
+        // Step 1: Save the Order to the database
         Order savedOrder = orderRepository.save(order);
 
-        // If needed, save the associated OrderLine entities
-        // You can iterate over orderLines and set the order ID to the saved order's ID before saving them
+        // Step 2: Fetch OrderLines associated with the Order's orderId
+        List<OrderLine> orderLines = orderLineRepository.findByOrderId(savedOrder.getId());
 
+        // Step 3: Optionally, set orderId for each OrderLine
         for (OrderLine orderLine : orderLines) {
             orderLine.setOrderId(savedOrder.getId());
-            // Save the OrderLine to the database
-             orderLineRepository.save(orderLine);
         }
+
+        // Step 4: Save each OrderLine to the database
+        orderLineRepository.saveAll(orderLines);
+        return savedOrder;
     }
 
 }

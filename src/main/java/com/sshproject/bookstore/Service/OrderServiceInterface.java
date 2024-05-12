@@ -1,11 +1,8 @@
 package com.sshproject.bookstore.Service;
 
 import com.sshproject.bookstore.Entity.Order;
-import com.sshproject.bookstore.Entity.OrderLine;
 
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderServiceInterface {
@@ -14,8 +11,7 @@ public interface OrderServiceInterface {
     List<Order> getAllUserOrders(int userId);
 
     //place a new order from the user
-    public void placeOrder(int userId, LocalDate orderDate, int paymentMethodId, int shippingAddressId,
-                           BigDecimal orderTotal, int orderStatusId, List<OrderLine> orderLines);
+     Order placeOrder(Order order);
 
 
 
