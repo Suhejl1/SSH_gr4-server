@@ -27,8 +27,13 @@ public class ReviewService implements ReviewServiceInterface {
     }
 
     @Override
-    public void deleteReview(int reviewId) {
+    public boolean deleteReview(int reviewId) {
         Optional<Review> reviewOptional = reviewRepository.findById(reviewId);
-        reviewOptional.ifPresent(reviewRepository::delete);
+        if (reviewOptional.isPresent()) {
+            reviewRepository.delete(reviewOptional.get());
+            return true; // Review deleted successfully
+        } else {
+            return false; // Review not found
+        }
     }
 }
