@@ -10,5 +10,5 @@ public interface ReviewServiceInterface {
 
     int addReview(Review review);
 
-    void deleteReview(int reviewId);
+    boolean  deleteReview(int reviewId);
 }

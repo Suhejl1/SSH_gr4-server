@@ -4,6 +4,8 @@ import com.sshproject.bookstore.Entity.Genre;
 import com.sshproject.bookstore.Service.GenreServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.spel.ast.OpAnd;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,25 +16,39 @@ public class GenreController {
     @Autowired
     private GenreServiceInterface genreServiceInterface;
     @GetMapping("api/v1/genre/{id}")
-    public Optional<Genre> getGenreById(@PathVariable("id") int id){
+    public ResponseEntity<Genre> getGenreById(@PathVariable("id") int id){
         Optional<Genre> genre = genreServiceInterface.getGenreById(id);
-        return genre;
+        return genre.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
 
     @PostMapping("api/v1/genre")
-    public int saveGenre(@RequestBody Genre genre){
+    public ResponseEntity<String> saveGenre(@RequestBody Genre genre){
         int result = genreServiceInterface.saveGenre(genre);
-        return result;
+        if (result > 0) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Genre saved successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save genre");
+        }
     }
     @DeleteMapping("api/v1/genre/{id}")
-    public int deleteGenreById(@PathVariable("id") int id){
+    public ResponseEntity<String> deleteGenreById(@PathVariable("id") int id){
         int result = genreServiceInterface.deleteGenreById(id);
-        return result;
+        if (result > 0) {
+            return ResponseEntity.ok("Genre deleted successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Genre not found");
+        }
     }
 
     @GetMapping("api/v1/genre")
-    public List<Genre> getAllGenres(){
-        return genreServiceInterface.getAllGenres();
+    public ResponseEntity<List<Genre>> getAllGenres(){
+        List<Genre> genres = genreServiceInterface.getAllGenres();
+        if (genres.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.ok(genres);
+        }
     }
 }

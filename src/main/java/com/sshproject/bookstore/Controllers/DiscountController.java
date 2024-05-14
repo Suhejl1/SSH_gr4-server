@@ -4,6 +4,8 @@ import com.sshproject.bookstore.Entity.Discount;
 import com.sshproject.bookstore.Service.DiscountService;
 import com.sshproject.bookstore.Service.DiscountServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,15 +14,23 @@ public class DiscountController {
     private DiscountServiceInterface discountInterface;
 
     @PostMapping("api/v1/discount")
-    public int addDiscount(@RequestBody Discount discount){
+    public ResponseEntity<String> addDiscount(@RequestBody Discount discount) {
         int new_discount_res = discountInterface.addDiscount(discount);
-        return new_discount_res;
+        if (new_discount_res > 0) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("Discount added successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add discount");
+        }
     }
 
     @GetMapping("api/v1/discount/{code}")
-    public Discount getDiscountByCode(@PathVariable("code") String code){
+    public ResponseEntity<Discount> getDiscountByCode(@PathVariable("code") String code) {
         Discount active_discount = discountInterface.getByCode(code);
-        return active_discount;
+        if (active_discount != null) {
+            return ResponseEntity.ok(active_discount);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
