@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService implements UserServiceInterface{
@@ -19,5 +20,12 @@ public class UserService implements UserServiceInterface{
         List<User> data = userRepository.findAll();
 
         return data;
+    }
+
+    @Override
+    public int deleteUser(int id) {
+        User delUser = userRepository.findById(id).get();
+        userRepository.deleteById(id);
+        return delUser.getId();
     }
 }
