@@ -26,14 +26,15 @@ public class CartController {
     }
 
     @PostMapping("api/v1/cart")
-    public ResponseEntity<String> addToCart(@RequestBody Cart cart) {
-        int cartItemId = cartService.addToCart(cart);
+    public ResponseEntity<String> addToCart(@RequestBody Cart cartItem) {
+        int cartItemId = cartService.addToCart(cartItem);
         if (cartItemId > 0) {
             return ResponseEntity.status(HttpStatus.CREATED).body("Item added to cart successfully");
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add item to cart");
         }
     }
+
 
     @DeleteMapping("api/v1/cart/{cartItemId}")
     public ResponseEntity<String> deleteFromCart(@PathVariable int cartItemId) {
