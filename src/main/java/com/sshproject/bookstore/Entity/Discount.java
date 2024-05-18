@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
@@ -12,7 +13,7 @@ import java.sql.Date;
 @Table(name="discount")
 public class Discount {
 
-    public Discount(String discount_code, double discount_percentage, Date expire_date){
+    public Discount(String discount_code, double discount_percentage, LocalDate expire_date){
         this.discountCode = discount_code;
         this.discount_percentage = discount_percentage;
         this.expire_date = expire_date;
@@ -25,5 +26,5 @@ public class Discount {
 
     private double discount_percentage;
 
-    private Date expire_date;
+    private LocalDate expire_date;
 }

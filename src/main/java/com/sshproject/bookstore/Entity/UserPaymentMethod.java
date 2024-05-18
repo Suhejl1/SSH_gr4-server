@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -12,7 +13,7 @@ import java.util.Date;
 @Table(name = "users_payment_methods")
 public class UserPaymentMethod {
 
-    public UserPaymentMethod(int userId, int paymentTypeId, String provider, String accountNumber, Date expireDate, boolean isDefault) {
+    public UserPaymentMethod(int userId, int paymentTypeId, String provider, String accountNumber, LocalDate expireDate, boolean isDefault) {
         this.userId = userId;
         this.paymentTypeId = paymentTypeId;
         this.provider = provider;
@@ -28,6 +29,6 @@ public class UserPaymentMethod {
     private int paymentTypeId;
     private String provider;
     private String accountNumber;
-    private Date expireDate;
+    private LocalDate expireDate;
     private boolean isDefault;
 }

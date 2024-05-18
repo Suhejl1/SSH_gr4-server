@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS role (
-    id INTEGER,
+    id INTEGER ,
     name VARCHAR(250),
     PRIMARY KEY (id)
 );

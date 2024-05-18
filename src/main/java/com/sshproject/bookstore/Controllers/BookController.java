@@ -20,10 +20,17 @@ public class BookController {
 
     @PostMapping("/add")
     public ResponseEntity<String> saveBook(@RequestBody BookRequestDTO bookRequestDTO) {
-        System.out.println("The book ISBN:" + bookRequestDTO.getIsbn());
+        // Attempt to add the book
         int id = bookService.addBook(bookRequestDTO);
+        System.out.println(id);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("Book added with ID: " + id);
+        if (id != -1) {
+            // Book added successfully
+            return ResponseEntity.status(HttpStatus.CREATED).body("Book added successfully");
+        } else {
+            // Book already exists
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Book already exists");
+        }
     }
 
     @GetMapping
