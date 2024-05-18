@@ -5,16 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Data
 @NoArgsConstructor
 @Table(name="authors")
 public class Author {
-    public Author(String name, String nationality, Date birth_date) {
+    public Author(String name, String nationality, LocalDate birthDate) {
         this.name = name;
         this.nationality = nationality;
-        this.birth_date = birth_date;
+        this.birthDate = birthDate;
     }
 
     @Id
@@ -22,5 +23,5 @@ public class Author {
     private int id;
     private String name;
     private String nationality;
-    private Date birth_date;
+    private LocalDate birthDate;
 }

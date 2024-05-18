@@ -6,34 +6,29 @@ import com.sshproject.bookstore.Repository.AuthorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AuthorService implements AuthorServiceInterface{
+public class AuthorService implements AuthorServiceInterface {
 
     @Autowired
     private AuthorRepository authorRepository;
+
     @Autowired
     private BookServiceInterface bookService;
 
     @Override
-    public int deleteAuthorById(int id) {
-        Optional<Author> author_optional = getAuthorById(id);
-        if(author_optional.isPresent()){
-            authorRepository.deleteById(id);
-            return id;
-        }
-        return -1;
+    public Optional<Author> getAuthorById(int id) {
+        return authorRepository.findById(id);
     }
 
     @Override
     public int addAuthor(Author author) {
-        Author new_author = new Author(author.getName(),author.getNationality(),author.getBirth_date());
-        authorRepository.save(new_author);
-        return new_author.getId();
+        authorRepository.save(author);
+        return author.getId();
     }
-
 
     @Override
     public List<Author> getAllAuthors() {
@@ -41,16 +36,23 @@ public class AuthorService implements AuthorServiceInterface{
     }
 
     @Override
-    public Optional<Author> getAuthorById(int id) {
-        Optional<Author> author =  authorRepository.findById(id);
-        if (author.isPresent()) {
-            return author;
+    public int deleteAuthorById(int id) {
+        Optional<Author> authorOptional = getAuthorById(id);
+        if (authorOptional.isPresent()) {
+            authorRepository.deleteById(id);
+            return id;
         }
-        return null;
+        return -1;
     }
 
     @Override
     public List<Book> getAuthorBooks(int id) {
         return bookService.getBooksByAuthorId(id);
     }
+
+    @Override
+    public Optional<Integer> findAuthorIdByDetails(String name, String nationality, LocalDate birthDate) {
+        return authorRepository.findIdByNameAndNationalityAndBirthDate(name, nationality, birthDate);
+    }
 }
+
