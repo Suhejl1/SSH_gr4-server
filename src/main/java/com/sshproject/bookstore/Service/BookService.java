@@ -1,14 +1,8 @@
 package com.sshproject.bookstore.Service;
 
 import com.sshproject.bookstore.DTO.BookRequestDTO;
-import com.sshproject.bookstore.Entity.Author;
-import com.sshproject.bookstore.Entity.Book;
-import com.sshproject.bookstore.Entity.Inventory;
-import com.sshproject.bookstore.Entity.Publisher;
-import com.sshproject.bookstore.Repository.AuthorRepository;
-import com.sshproject.bookstore.Repository.BookRepository;
-import com.sshproject.bookstore.Repository.InventoryRepository;
-import com.sshproject.bookstore.Repository.PublisherRepository;
+import com.sshproject.bookstore.Entity.*;
+import com.sshproject.bookstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,24 +26,24 @@ public class BookService implements BookServiceInterface {
     @Autowired
     private InventoryRepository inventoryRepository;
 
+    @Autowired
+    private GenreRepository genreRepository;
+
+    @Autowired
+    private BookGenreRelationshipRepository bookGenreRelationshipRepository;
+
     @Override
     public int addBook(BookRequestDTO bookRequestDTO) {
-
-        System.out.println("The book isbn: " + bookRequestDTO.getIsbn());
         // Check if book with the given ISBN already exists
         Optional<Book> existingBook = bookRepository.findByIsbn(bookRequestDTO.getIsbn());
         if (existingBook.isPresent()) {
             return -1; // Indicating that the book already exists
         }
 
-        System.out.println("This is the part before retreieveing the author id");
-
         // Handle author
         Optional<Author> authorIdOpt = authorRepository.findByNameAndNationalityAndBirthDate(
                 bookRequestDTO.getAuthorName(), bookRequestDTO.getAuthorNationality(), bookRequestDTO.getAuthorBirthDate()
         );
-        System.out.println("The author id was retreieved sucsessfully!");
-
 
         int authorId;
         if (authorIdOpt.isPresent()) {
@@ -91,6 +85,14 @@ public class BookService implements BookServiceInterface {
                 inventory.getId()
         );
         Book savedBook = bookRepository.save(book);
+
+        // Handle genres
+        for (String genreName : bookRequestDTO.getGenres()) {
+            Optional<Genre> genreOpt = genreRepository.findByName(genreName);
+            int genreId = genreOpt.get().getId();
+            BookGenreRelationship bookGenreRelationship = new BookGenreRelationship(savedBook.getId(), genreId);
+            bookGenreRelationshipRepository.save(bookGenreRelationship);
+        }
 
         return savedBook.getId();
     }

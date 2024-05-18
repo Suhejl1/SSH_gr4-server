@@ -12,7 +12,8 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class GenreController {
+public class
+GenreController {
     @Autowired
     private GenreServiceInterface genreServiceInterface;
     @GetMapping("api/v1/genre/{id}")

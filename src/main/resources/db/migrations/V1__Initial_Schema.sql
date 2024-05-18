@@ -47,7 +47,7 @@ payment_type_id INTEGER,
 provider VARCHAR(250),
 account_number VARCHAR(250),
 expire_date DATE,
-is_deffault BOOLEAN,
+is_default BOOLEAN,
 PRIMARY KEY (id),
 FOREIGN KEY (user_id) REFERENCES users(id),
 FOREIGN KEY (payment_type_id) REFERENCES payment_type(id)
