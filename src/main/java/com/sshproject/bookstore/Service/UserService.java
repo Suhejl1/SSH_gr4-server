@@ -28,4 +28,9 @@ public class UserService implements UserServiceInterface{
         userRepository.deleteById(id);
         return delUser.getId();
     }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return userRepository.findByEmailAddress(email);
+    }
 }

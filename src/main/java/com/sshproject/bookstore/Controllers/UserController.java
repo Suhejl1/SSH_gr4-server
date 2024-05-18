@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/")
@@ -35,6 +36,17 @@ public class UserController {
             return ResponseEntity.ok("User deleted successfully with id " + deletedId);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
+    @GetMapping("/users/byEmail/{email}")
+    public ResponseEntity<Integer> getUserIdByEmail(@PathVariable String email) {
+        Optional<User> userOptional = userService.findUserByEmail(email);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            return ResponseEntity.ok(user.getId());
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
