@@ -13,10 +13,10 @@ import javax.annotation.processing.Generated;
 @Data //This annotation replaces @Getter, @Setter and @toString. :)
 @NoArgsConstructor
 public class Book {
-    public Book(String title, int author_id, String ISBN, int publisher, int publishing_year,double price, String image, String description, int inventory_id) {
+    public Book(String title, int author_id, String isbn, int publisher, int publishing_year,double price, String image, String description, int inventory_id) {
         this.title = title;
         this.authorId = author_id;
-        this.ISBN = ISBN;
+        this.isbn = isbn;
         this.publisher = publisher;
         this.publishing_year = publishing_year;
         this.price = price;
@@ -34,7 +34,7 @@ public class Book {
     private String title;
 
     private int authorId;
-    private String ISBN;
+    private String isbn;
     private int publisher;
 
     private double price;

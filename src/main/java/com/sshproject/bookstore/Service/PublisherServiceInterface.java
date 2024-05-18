@@ -1,6 +1,7 @@
 package com.sshproject.bookstore.Service;
 
 import com.sshproject.bookstore.Entity.Publisher;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -10,4 +11,5 @@ public interface PublisherServiceInterface {
     int savePublisher(Publisher publisher);
     int deletePublisherById(int id);
 
+    Optional<Integer> findPublisherByDetails(String name, String location);
 }

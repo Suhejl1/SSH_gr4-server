@@ -1,5 +1,6 @@
 package com.sshproject.bookstore.Controllers;
 
+import com.sshproject.bookstore.DTO.BookRequestDTO;
 import com.sshproject.bookstore.Entity.Book;
 import com.sshproject.bookstore.Service.BookServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,51 +12,51 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class BookController
-{
+@RequestMapping("api/v1/books")
+public class BookController {
 
     @Autowired
     private BookServiceInterface bookService;
 
-    @PostMapping("api/v1/book")
-    public ResponseEntity<String> saveBook(@RequestBody Book book) {
-        int id = bookService.addBook(book);
+    @PostMapping("/add")
+    public ResponseEntity<String> saveBook(@RequestBody BookRequestDTO bookRequestDTO) {
+        System.out.println("The book ISBN:" + bookRequestDTO.getIsbn());
+        int id = bookService.addBook(bookRequestDTO);
+
         return ResponseEntity.status(HttpStatus.CREATED).body("Book added with ID: " + id);
     }
 
-    @GetMapping("api/v1/book")
+    @GetMapping
     public ResponseEntity<?> getBooks() {
-        List<Book> response_books = bookService.getBooks();
-        if (response_books.isEmpty()) {
+        List<Book> responseBooks = bookService.getBooks();
+        if (responseBooks.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No books found");
         }
-        return ResponseEntity.ok(response_books);
+        return ResponseEntity.ok(responseBooks);
     }
 
-    @DeleteMapping("api/v1/book")
+    @DeleteMapping
     public ResponseEntity<String> deleteBook() {
-        List<Integer> id_responses = bookService.deleteBooks();
-        if (id_responses.isEmpty()) {
+        List<Integer> idResponses = bookService.deleteBooks();
+        if (idResponses.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body("No books deleted");
         }
-        return ResponseEntity.ok("Deleted book IDs: " + id_responses);
+        return ResponseEntity.ok("Deleted book IDs: " + idResponses);
     }
 
-    @GetMapping("api/v1/book/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable("id") int id) {
         Optional<Book> book = bookService.getBookById(id);
         return book.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PutMapping("api/v1/book/{id}")
-    public ResponseEntity<String> updateBookById(@PathVariable("id") int id, @RequestBody Book book) {
-        String response = bookService.updateBook(id, book);
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateBookById(@PathVariable("id") int id, @RequestBody Book updatedBook) {
+        String response = bookService.updateBook(id, updatedBook);
         if (response != null) {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
     }
-
-
 }

@@ -9,39 +9,38 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PublisherService implements PublisherServiceInterface{
+public class PublisherService implements PublisherServiceInterface {
     @Autowired
     private PublisherRepository publisherRepository;
 
     @Override
-    public List<Publisher> getAllPublishers(){
+    public List<Publisher> getAllPublishers() {
         return publisherRepository.findAll();
     }
 
     @Override
-    public Optional<Publisher> getPublisherById(int id){
-        Optional<Publisher> publisherOptional = publisherRepository.findById(id);
-        if(publisherOptional.isPresent()){
-            return publisherOptional;
-        }
-        return null;
-
+    public Optional<Publisher> getPublisherById(int id) {
+        return publisherRepository.findById(id);
     }
 
     @Override
-    public int savePublisher(Publisher publisher){
-        Publisher newPublisher = new Publisher(publisher.getName(), publisher.getLocation());
-        publisherRepository.save(newPublisher);
+    public int savePublisher(Publisher publisher) {
+        Publisher newPublisher = publisherRepository.save(new Publisher(publisher.getName(), publisher.getLocation()));
         return newPublisher.getId();
     }
 
     @Override
-    public int deletePublisherById(int id){
+    public int deletePublisherById(int id) {
         Optional<Publisher> publisherOptional = getPublisherById(id);
-        if(publisherOptional.isPresent()){
+        if (publisherOptional.isPresent()) {
             publisherRepository.deleteById(id);
             return id;
         }
         return -1;
+    }
+
+    @Override
+    public Optional<Integer> findPublisherByDetails(String name, String location) {
+        return publisherRepository.findIdByNameAndLocation(name, location);
     }
 }
