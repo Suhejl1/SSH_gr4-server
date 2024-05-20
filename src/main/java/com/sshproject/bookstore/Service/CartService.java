@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartService implements CartServiceInterface {
@@ -15,20 +14,31 @@ public class CartService implements CartServiceInterface {
     private CartRepository cartRepository;
 
     @Override
-    public List<Cart> getAllCartItems() {
-        List<Cart> allCartItems = cartRepository.findAll();
-        return allCartItems;
+    public List<Cart> getCartItems(int userId) {
+        return cartRepository.findByUserId(userId);
     }
 
     @Override
-    public int addToCart(Cart cart) {
-        Cart newCartItem = new Cart(cart.getCartId(), cart.getProduct_item_id(), cart.getQuantity());
-        cartRepository.save(newCartItem);
-        return newCartItem.getId();
+    public void addToCart(Cart cartItem) {
+        cartRepository.save(cartItem);
     }
+
     @Override
-    public void deleteFromCart(int cartItemId) {
-        Optional<Cart> cartItemOptional = cartRepository.findById(cartItemId);
-        cartItemOptional.ifPresent(cartRepository::delete);
+    public void deleteFromCart(int userId, int bookId) {
+        cartRepository.deleteByUserIdAndBookId(userId, bookId);
+    }
+
+    @Override
+    public void clearCart(int userId) {
+        cartRepository.deleteByUserId(userId);
+    }
+
+    @Override
+    public void updateCartItem(int userId, int bookId, int quantity) {
+        Cart cartItem = cartRepository.findByUserIdAndBookId(userId, bookId);
+        if (cartItem != null) {
+            cartItem.setQuantity(quantity);
+            cartRepository.save(cartItem);
+        }
     }
 }
