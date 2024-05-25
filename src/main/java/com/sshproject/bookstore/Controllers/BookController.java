@@ -3,6 +3,9 @@ package com.sshproject.bookstore.Controllers;
 import com.sshproject.bookstore.DTO.BookRequestDTO;
 import com.sshproject.bookstore.Entity.Book;
 import com.sshproject.bookstore.Service.BookServiceInterface;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/books")
+@Tag(name = "Books")
 public class BookController {
+
+
 
     @Autowired
     private BookServiceInterface bookService;
@@ -33,6 +39,20 @@ public class BookController {
         }
     }
 
+    @Operation(
+            description = "Get endpoint for books",
+            summary = "Try it out to get the books available from database",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<?> getBooks() {
         List<Book> responseBooks = bookService.getBooks();
