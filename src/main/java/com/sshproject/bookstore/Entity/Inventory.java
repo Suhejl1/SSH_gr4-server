@@ -10,16 +10,16 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 public class Inventory {
-    public  Inventory(int quantity, LocalDate date_added, LocalDate date_modified){
+    public  Inventory(int quantity, LocalDate dateAdded, LocalDate dateModified){
         this.quantity = quantity;
-        this.date_added = date_added;
-        this.date_modified = date_modified;
+        this.dateAdded = dateAdded;
+        this.dateModified = dateModified;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private int quantity;
-    private LocalDate date_added;
-    private LocalDate date_modified;
+    private LocalDate dateAdded;
+    private LocalDate dateModified;
 }

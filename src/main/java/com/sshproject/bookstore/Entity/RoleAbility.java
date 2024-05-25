@@ -17,12 +17,20 @@ public class RoleAbility {
     private RoleAbilityId id;
 
     @ManyToOne
-    @JoinColumn(name = "role_id", insertable = false, updatable = false)
+    @JoinColumn(name = "roleId", insertable = false, updatable = false)
     private Role role;
 
     @ManyToOne
-    @JoinColumn(name = "ability_id", insertable = false, updatable = false)
+    @JoinColumn(name = "abilityId", insertable = false, updatable = false)
     private Ability ability;
+
+    public RoleAbilityId getRoleAbilityID() {
+        return id;
+    }
+    public void setRoleAbilityId(RoleAbilityId id) {
+        this.id = id;
+    }
+
 }
 
 
@@ -32,10 +40,10 @@ public class RoleAbility {
 @NoArgsConstructor
 class RoleAbilityId implements Serializable {
 
-    @Column(name = "role_id")
+    @Column(name = "roleId")
     private int roleId;
 
-    @Column(name = "ability_id")
+    @Column(name = "abilityId")
     private int abilityId;
 
     // Constructors, getters, and setters

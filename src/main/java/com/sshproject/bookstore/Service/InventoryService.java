@@ -31,7 +31,7 @@ public class InventoryService implements InventoryServiceInterface{
     @Override
     public int saveInventory(Inventory inventory){
         Inventory inventory1 = new Inventory(inventory.getQuantity(),
-                inventory.getDate_added(), inventory.getDate_modified());
+                inventory.getDateAdded(), inventory.getDateModified());
         inventoryRepository.save(inventory1);
         return inventory1.getId();
     }

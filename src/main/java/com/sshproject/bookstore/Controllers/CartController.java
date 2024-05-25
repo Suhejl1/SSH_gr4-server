@@ -18,7 +18,6 @@ public class CartController {
 
     @GetMapping("/{userId}")
     public ResponseEntity<List<Cart>> getCartItems(@PathVariable int userId) {
-        System.out.println("A po punon ky controller");
         List<Cart> cartItems = cartService.getCartItems(userId);
         if (cartItems.isEmpty()) {
             return ResponseEntity.noContent().build();
