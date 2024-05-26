@@ -12,4 +12,6 @@ public interface BookRepository extends JpaRepository<Book,Integer> {
     Optional<Book> findByIsbn(String isbn);
     //In repositories there is no method or code written because it gets it all from parent class JpaRepository
 
+//    List<Book> findByGenresId(int genreId);
+    int getBookById(int id);
 }

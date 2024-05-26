@@ -1,5 +1,6 @@
 package com.sshproject.bookstore.Controllers;
 
+import com.sshproject.bookstore.Entity.Book;
 import com.sshproject.bookstore.Entity.Genre;
 import com.sshproject.bookstore.Service.GenreServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,17 @@ GenreController {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.ok(genres);
+        }
+    }
+
+    //getGenreIdByGenre
+    @GetMapping("api/v1/genre/name/{genreName}")
+    public int getGenreIdByName(@PathVariable("genreName") String genreName){
+        int result = genreServiceInterface.getGenreIdByName(genreName);
+        if(result != -1){
+            return result;
+        }else{
+            return -1;
         }
     }
 }

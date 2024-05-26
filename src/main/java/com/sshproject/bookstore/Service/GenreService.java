@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 @Service
 public class GenreService implements GenreServiceInterface{
     @Autowired
@@ -38,5 +39,15 @@ public class GenreService implements GenreServiceInterface{
         Genre newGenre = new Genre(genre.getName());
         genreRepository.save(newGenre);
         return newGenre.getId();
+    }
+
+    @Override
+    public int getGenreIdByName(String name){
+        Optional<Genre> genre1 = genreRepository.findByName(name);
+        if(genre1 != null){
+            return genre1.get().getId();
+        }else {
+            return -1;
+        }
     }
 }
