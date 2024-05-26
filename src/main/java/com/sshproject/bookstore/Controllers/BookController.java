@@ -66,4 +66,36 @@ public class BookController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
     }
+
+//    @GetMapping("/genre/{genreId}")
+//    public ResponseEntity<List<Book>> getBooksByGenre(@PathVariable int genreId) {
+//        List<Book> books = bookService.getBooksByGenre(genreId);
+//        if (books.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        } else {
+//            return ResponseEntity.ok(books);
+//        }
+//    }
+
+    //getBooksByGenre
+    //
+//    @GetMapping("/genre/{genresId}")
+//    public ResponseEntity<?> getBooksByGenres(@PathVariable int genresId){
+//        List<Book> books = bookService.getBooksByGenres(genresId);
+//        if(books.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+//        }else {
+//            return ResponseEntity.ok(books);
+//        }
+//    }
+
+    @GetMapping("/genre/{id}/books")
+    public ResponseEntity<List<Book>> getBooksByGenreId(@PathVariable int id){
+        List<Book> books = bookService.getBooksByGenreId(id);
+        if(!books.isEmpty()){
+            return ResponseEntity.ok(books);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(books);
+        }
+    }
 }

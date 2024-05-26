@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Table(name="books_genres_relationship")
 public class BookGenreRelationship {
+    @EmbeddedId
+    private BookGenreRelationshipId id;
 
     public BookGenreRelationship(int bookId, int genresId) {
             this.id = new BookGenreRelationshipId(bookId, genresId);
@@ -21,7 +23,6 @@ public class BookGenreRelationship {
         this.id = id;
     }
 
-    @EmbeddedId
-    private BookGenreRelationshipId id;
+
 
 }
