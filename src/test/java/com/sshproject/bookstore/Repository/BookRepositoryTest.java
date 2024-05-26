@@ -36,16 +36,16 @@ class BookRepositoryTest {
     public void testSaveBook() {
         // Given
         Author author = new Author("Author Name", "Nationality", LocalDate.of(1970, 1, 1));
-        author.setId(1); // Explicitly setting ID to 1 for testing purposes
+
         entityManager.persist(author);
         entityManager.flush(); // Ensure the author is persisted before the book
         Publisher publisher = new Publisher("Visar Gjema", "Prishtine");
-        publisher.setId(1);
+
         entityManager.persist(publisher);
         entityManager.flush();
 
         Inventory inventory = new Inventory(2,LocalDate.now(),LocalDate.now());
-        inventory.setId(1);
+
         entityManager.persist(inventory);
         entityManager.flush();
 

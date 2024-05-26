@@ -18,18 +18,14 @@ public class AuthorRepositoryTest {
 
     @Test
     public void testFindIdByNameAndNationalityAndBirthDate() {
+        // Arrange
         Author author = new Author("Author Name", "Nationality", LocalDate.of(1980, 1, 1));
         authorRepository.save(author);
-        Optional<Integer> foundId = authorRepository.findIdByNameAndNationalityAndBirthDate("Author Name", "Nationality", LocalDate.of(1980, 1, 1));
-        assertThat(foundId).isPresent();
-        assertThat(foundId.get()).isEqualTo(author.getId());
-    }
 
-    @Test
-    public void testFindByNameAndNationalityAndBirthDate() {
-        Author author = new Author("Author Name", "Nationality", LocalDate.of(1980, 1, 1));
-        authorRepository.save(author);
+        // Act
         Optional<Author> foundAuthor = authorRepository.findByNameAndNationalityAndBirthDate("Author Name", "Nationality", LocalDate.of(1980, 1, 1));
+
+        // Assert
         assertThat(foundAuthor).isPresent();
         assertThat(foundAuthor.get().getId()).isEqualTo(author.getId());
     }

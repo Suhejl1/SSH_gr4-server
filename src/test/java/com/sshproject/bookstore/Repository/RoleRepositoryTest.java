@@ -19,6 +19,9 @@ public class RoleRepositoryTest {
         Role role1 = new Role("Admin");
         Role role2 = new Role("User");
 
+        role1.setId(1);
+        role2.setId(2);
+
         roleRepository.save(role1);
         roleRepository.save(role2);
 
