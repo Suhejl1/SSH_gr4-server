@@ -15,7 +15,7 @@ public class PaymentTypeController {
     @Autowired
     private PaymentTypeServiceInterface paymentTypeService;
 
-    @GetMapping("api/V1/payment_type")
+    @GetMapping("api/v1/payment_type")
     public ResponseEntity<List<PaymentType>> getAllPaymentTypes() {
         List<PaymentType> paymentTypes = paymentTypeService.getAllPaymentTypes();
         if (paymentTypes.isEmpty()) {
@@ -25,7 +25,7 @@ public class PaymentTypeController {
         }
     }
 
-    @PostMapping("api/V1/payment_type")
+    @PostMapping("api/v1/payment_type")
     public ResponseEntity<?> addPaymentType(@RequestBody PaymentType paymentType) {
         int id = paymentTypeService.addPaymentType(paymentType);
         if (id != 0) {
@@ -35,7 +35,7 @@ public class PaymentTypeController {
         }
     }
 
-    @DeleteMapping("api/V1/payment_type/{paymentTypeId}")
+    @DeleteMapping("api/v1/payment_type/{paymentTypeId}")
     public ResponseEntity<?> deletePaymentType(@PathVariable int paymentTypeId) {
         boolean deleted = paymentTypeService.deletePaymentType(paymentTypeId);
         if (deleted) {
