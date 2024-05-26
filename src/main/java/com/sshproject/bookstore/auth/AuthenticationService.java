@@ -44,6 +44,20 @@ public class AuthenticationService {
         return repository.save(user);
     }
 
+    public com.sshproject.bookstore.Entity.User signup_admin(RegisterRequest registerRequest){
+        if(repository.findByEmailAddress(registerRequest.getEmail()).isPresent()){
+            throw new IllegalArgumentException("Email argument already exists");
+        }
+
+        Role role = roleRepository.findByName("ADMIN");
+        com.sshproject.bookstore.Entity.User user =  new User();
+        user.setEmailAddress(registerRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setRole(role);
+
+        return repository.save(user);
+    }
+
     public AuthenticationResponse signin(AuthenticationRequest request) {
         try {
             authenticationManager.authenticate(
