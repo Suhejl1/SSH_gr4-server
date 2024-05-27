@@ -1,5 +1,6 @@
 package com.sshproject.bookstore.Service;
 
+import com.sshproject.bookstore.DTO.OrderItemDTO;
 import com.sshproject.bookstore.Entity.Order;
 
 
@@ -11,7 +12,7 @@ public interface OrderServiceInterface {
     List<Order> getAllUserOrders(int userId);
 
     //place a new order from the user
-     Order placeOrder(Order order);
+     Order placeOrder(OrderItemDTO order);
 
 
 

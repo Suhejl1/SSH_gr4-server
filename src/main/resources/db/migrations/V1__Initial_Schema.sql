@@ -78,14 +78,11 @@ PRIMARY KEY (id)
 id INTEGER AUTO_INCREMENT,
 user_id INTEGER,
 order_date DATE,
-payment_method_id INTEGER,
-shipping_address_id INTEGER,
+shipping_address VARCHAR(250),
 order_total DECIMAL,
 order_status_id INTEGER,
 PRIMARY KEY (id),
-FOREIGN KEY (user_id) REFERENCES users(id),
-FOREIGN KEY (payment_method_id) REFERENCES users_payment_methods(id),
-FOREIGN KEY (shipping_address_id) REFERENCES addresses(id)
+FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
  CREATE TABLE IF NOT EXISTS authors (

@@ -13,11 +13,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Table(name = "shop_orders")
 public class Order {
-    public Order(int userId, LocalDate orderDate, int paymentMethodId, int shippingAddressId, BigDecimal orderTotal) {
+    public Order(int userId, LocalDate orderDate,  String shippingAddress, double orderTotal) {
         this.userId = userId;
         this.orderDate = orderDate;
-        this.paymentMethodId = paymentMethodId;
-        this.shippingAddressId = shippingAddressId;
+        this.shippingAddress = shippingAddress;
         this.orderTotal = orderTotal;
 
     }
@@ -28,9 +27,8 @@ public class Order {
     private int id;
     private int userId;
     private LocalDate orderDate;
-    private int paymentMethodId;
-    private int shippingAddressId;
-    private BigDecimal orderTotal;
+    private String shippingAddress;
+    private double orderTotal;
 
 
 

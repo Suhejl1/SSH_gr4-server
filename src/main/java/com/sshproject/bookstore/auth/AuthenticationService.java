@@ -1,8 +1,10 @@
 package com.sshproject.bookstore.auth;
 
 import com.sshproject.bookstore.Entity.Role;
+import com.sshproject.bookstore.Entity.ShopCart;
 import com.sshproject.bookstore.Entity.User;
 import com.sshproject.bookstore.Repository.RoleRepository;
+import com.sshproject.bookstore.Repository.ShopCartRepository;
 import com.sshproject.bookstore.Repository.UserRepository;
 import com.sshproject.bookstore.config.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class AuthenticationService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final ShopCartRepository shopCartRepository;
 
     private final JwtService jwtService;
 
@@ -40,6 +43,13 @@ public class AuthenticationService {
         user.setEmailAddress(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setRole(role);
+
+        repository.save(user);
+
+        ShopCart shopCart = new ShopCart(user.getId());
+        shopCartRepository.save(shopCart);
+
+
 
         return repository.save(user);
     }
