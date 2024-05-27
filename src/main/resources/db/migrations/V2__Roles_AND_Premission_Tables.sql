@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS role (
 );
 
 CREATE TABLE IF NOT EXISTS ability (
-    id INTEGER,
+    id INTEGER AUTO_INCREMENT,
     model_name VARCHAR(250),
     verb VARCHAR(250),
     field VARCHAR(250),

@@ -21,9 +21,9 @@ public class FavoriteService implements FavoriteServiceInterface {
 
     @Override
     public int addToFavorites(Favorite favorite) {
-        Favorite newFavorite = new Favorite(favorite.getUser_id(), favorite.getBook_id());
+        Favorite newFavorite = new Favorite(favorite.getUserId(), favorite.getBookId());
         favoriteRepository.save(newFavorite);
-        return newFavorite.getUser_id(); // Or you can return newFavorite.getId() if it's the user ID you want to return
+        return newFavorite.getUserId(); // Or you can return newFavorite.getId() if it's the user ID you want to return
     }
 
     @Override

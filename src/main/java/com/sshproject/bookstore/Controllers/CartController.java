@@ -14,10 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("api/v1/cart")
 public class CartController {
 
     @Autowired
     private CartServiceInterface cartService;
+
 
     @GetMapping("api/v1/cart/{userId}")
     public ResponseEntity<List<CartItemDTO>> getAllCartItems(@PathVariable int userId) {
@@ -28,6 +30,7 @@ public class CartController {
             return ResponseEntity.ok(books);
         }
     }
+
 
     @PutMapping("api/v1/cart/update/{userId}/{bookId}/{newQuantity}")
     public ResponseEntity<String> updateCartItem(@PathVariable int userId, @PathVariable int bookId, @PathVariable int newQuantity) {
@@ -40,15 +43,9 @@ public class CartController {
 
     @PostMapping("api/v1/cart")
     public ResponseEntity<String> addToCart(@RequestBody Cart cartItem) {
-        int cartItemId = cartService.addToCart(cartItem);
-        if (cartItemId > 0) {
-            return ResponseEntity.status(HttpStatus.CREATED).body("Item added to cart successfully");
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to add item to cart");
-        }
+        cartService.addToCart(cartItem);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Item added to cart successfully");
     }
-
-
 
 
     @DeleteMapping("api/v1/cart/{userId}/{bookId}")

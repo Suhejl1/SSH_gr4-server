@@ -11,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CartService implements CartServiceInterface {
@@ -24,10 +23,9 @@ public class CartService implements CartServiceInterface {
 
 
     @Override
+
     public List<CartItemDTO> getAllCartItems(int userId) {
         List<Cart> cartItems = cartRepository.findByCartId(userId);
-
-
 
         List<CartItemDTO> books = new ArrayList<>();
         for(Cart cart : cartItems) {
@@ -57,6 +55,17 @@ public class CartService implements CartServiceInterface {
         cartRepository.save(newCartItem);
         return newCartItem.getId();
     }
+
+    @Override
+    public void deleteFromCart(int userId, int bookId) {
+        cartRepository.deleteByUserIdAndBookId(userId, bookId);
+    }
+
+    @Override
+    public void clearCart(int userId) {
+        cartRepository.deleteByUserId(userId);
+    }
+
     @Override
     public void deleteFromCart(int cartItemId, int bookId) {
         Optional<Cart> cartItemOptional = cartRepository.findByCartIdAndProductItemId(cartItemId, bookId);

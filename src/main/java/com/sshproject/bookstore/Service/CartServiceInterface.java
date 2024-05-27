@@ -8,13 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 public interface CartServiceInterface {
+
     List<CartItemDTO> getAllCartItems(int userId);
-
     int addToCart(Cart cart);
-    void deleteFromCart(int cartItemId, int bookId);
-
+    void deleteFromCart(int cartItemId, int bookId)
     void deleteAllItemsFromCart(int userId);
-
 
     @Transactional
     void updateCartItem(int userId, int bookId, int newQuantity);
@@ -24,4 +22,5 @@ public interface CartServiceInterface {
 
     @Transactional
     void decrementQuantity(int userId, int bookId);
+
 }
