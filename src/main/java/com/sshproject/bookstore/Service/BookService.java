@@ -175,4 +175,11 @@ public class BookService implements BookServiceInterface {
         publisherRepository.save(publisher);
         return publisher.getId();
     }
+
+    @Override
+    public List<Book> getBooksByGenreId(int genresId){
+        List<Integer> bookIds = bookGenreRelationshipRepository.findBookIdByGenresId(genresId);
+        return bookRepository.findAllById(bookIds);
+
+    }
 }

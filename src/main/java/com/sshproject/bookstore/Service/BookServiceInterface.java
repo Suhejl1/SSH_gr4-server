@@ -21,4 +21,6 @@ public interface BookServiceInterface {
 
     Optional<Integer> findPublisherIdByDetails(String name, String location);
     int addPublisher(String name, String location);
+
+    List<Book> getBooksByGenreId(int genresId);
 }
