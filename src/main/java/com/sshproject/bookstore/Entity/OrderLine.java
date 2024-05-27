@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Table(name = "order_line")
 public class OrderLine {
-    public OrderLine(int productItemId, int orderId, int quantity, BigDecimal price) {
+    public OrderLine(int productItemId, int orderId, int quantity, double price) {
         this.productItemId = productItemId;
         this.orderId = orderId;
         this.quantity = quantity;
@@ -27,7 +27,7 @@ public class OrderLine {
     private int productItemId;
     private int orderId;
     private int quantity;
-    private BigDecimal price;
+    private double price;
 
 
 
