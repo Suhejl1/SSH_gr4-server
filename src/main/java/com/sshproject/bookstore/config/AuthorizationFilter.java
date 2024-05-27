@@ -28,7 +28,6 @@ public class AuthorizationFilter extends OncePerRequestFilter {
         System.out.println(method);
         String endpoint = request.getRequestURI();
         System.out.println(endpoint);
-        String verb = "all";
 
         //Get auth header which contains the jwt token
         final String authHeader  = request.getHeader("Authorization");
@@ -41,12 +40,20 @@ public class AuthorizationFilter extends OncePerRequestFilter {
 
 
        Optional<User> user =  userRepository.findByEmailAddress(email);
+
        int roleId = 0;
        if (user.isPresent()){
            roleId = user.get().getRole().getId();
        }
 
-       boolean isAuthorized = checkAuthorization(method,endpoint,verb,roleId);
+        boolean isAuthorized = false;
+        try {
+            isAuthorized = checkAuthorization(method,endpoint,roleId);
+        } catch (NoSuchFieldException e) {
+            throw new RuntimeException(e);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
 
 
         if (isAuthorized) {
@@ -58,16 +65,36 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
 
-    private boolean checkAuthorization(String method, String endpoint, String verb, int current_role_id){
-        int abilityId = authorizationExtracterService.getAbilityIdFromHTTPREquest(method,endpoint,verb);
-        List<Integer> roleIds = authorizationExtracterService.getRoleIdFromAbilityId(abilityId);
-        for(int i: roleIds){
-            System.out.println("Role Id number: " + i);
-            if (current_role_id==i){
-                System.out.println("Not authorized");
-                return false;
+    private boolean checkAuthorization(String method, String endpoint, int current_role_id) throws NoSuchFieldException, IllegalAccessException {
+
+        // Kontrollon nese ka fields si /id/bookId dhe a jane te formatuara mire
+        boolean varyingParamsStatus = authorizationExtracterService.checkVaryingParams(method,endpoint);
+        System.out.println(varyingParamsStatus);
+
+        // Nese po vazhdo checking te role dhe ability Id-s
+        if(varyingParamsStatus){
+
+
+            //Endpointi nese eshte psh /api/v1/faq/1 duhet te perkthehet ne te sakten si ne db /api/v1/faq pa field
+            String correctEndpoint = authorizationExtracterService.getCorrectEndpoint(method,endpoint);
+
+
+            int abilityId = authorizationExtracterService.getAbilityIdFromHTTPREquest(method,correctEndpoint);
+
+
+            List<Integer> roleIds = authorizationExtracterService.getRoleIdFromAbilityId(abilityId);
+
+            for(int i: roleIds){
+                System.out.println("Role Id number: " + i);
+                if (current_role_id==i){
+                    System.out.println("Not authorized");
+                    return false;
+                }
             }
+
         }
         return true;
     }
 }
+
+

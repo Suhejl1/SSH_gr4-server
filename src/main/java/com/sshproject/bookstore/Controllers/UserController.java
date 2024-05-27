@@ -3,6 +3,8 @@ package com.sshproject.bookstore.Controllers;
 import com.sshproject.bookstore.Entity.User;
 import com.sshproject.bookstore.Service.UserService;
 import com.sshproject.bookstore.Service.UserServiceInterface;
+import com.sshproject.bookstore.auth.AuthenticationService;
+import com.sshproject.bookstore.auth.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("api/v1/")
 public class UserController {
+
+    @Autowired
+    private AuthenticationService authService;
 
     @Autowired
     private UserServiceInterface userService;
@@ -48,5 +53,10 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/users/signup/admin")
+    public ResponseEntity<User> signup_admin(@RequestBody RegisterRequest request){
+        return ResponseEntity.ok(authService.signup_admin(request));
     }
 }
