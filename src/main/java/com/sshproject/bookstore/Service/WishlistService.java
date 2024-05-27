@@ -23,9 +23,15 @@ public class WishlistService implements  WishlistServiceInterface{
     //TODO: You can add the same book twice to the same user id , this should not happen.
     @Override
     public void addBookToWishlist(int bookId, int userId) {
+        boolean bookExists = wishlistRepository.existsByBookIdAndUserId(bookId, userId);
+        if (bookExists) {
+            // Book already exists in the wishlist, return without adding it again
+            return;
+        }
+
+        // Book doesn't exist in the wishlist, add it
         Wishlist newItem = new Wishlist(bookId, userId);
         wishlistRepository.save(newItem);
-
     }
     @Transactional
     @Override

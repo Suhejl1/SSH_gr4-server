@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.annotation.processing.Generated;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "books")
@@ -32,11 +35,9 @@ public class Book {
 
 //    @Column(name="new-column-name", length = 512, nullable=false) - This annotation can change column properties, name, length and more
     private String title;
-
     private int authorId;
     private String isbn;
     private int publisher;
-
     private double price;
     private int publishing_year;
     private String image;

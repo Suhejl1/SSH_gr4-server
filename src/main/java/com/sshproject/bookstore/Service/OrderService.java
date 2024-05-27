@@ -1,13 +1,17 @@
 package com.sshproject.bookstore.Service;
 
+import com.sshproject.bookstore.DTO.OrderItemDTO;
+import com.sshproject.bookstore.Entity.Inventory;
 import com.sshproject.bookstore.Entity.Order;
 import com.sshproject.bookstore.Entity.OrderLine;
-import com.sshproject.bookstore.Repository.OrderLineRepository;
-import com.sshproject.bookstore.Repository.OrderRepository;
+import com.sshproject.bookstore.Entity.ShopCart;
+import com.sshproject.bookstore.Repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService implements OrderServiceInterface{
@@ -17,28 +21,56 @@ public class OrderService implements OrderServiceInterface{
     @Autowired
     private OrderLineRepository orderLineRepository;
 
+    @Autowired
+    private ShopCartRepository shopCartRepository;
+
+    @Autowired
+    private CartRepository cartRepository;
+    @Autowired
+    private InventoryRepository inventoryRepository;
+
 
     @Override
     public List<Order> getAllUserOrders(int userId) {
         return orderRepository.findByUserId(userId);
     }
 
+    @Transactional
     @Override
-    public Order placeOrder(Order order) {
-        // Step 1: Save the Order to the database
-        Order savedOrder = orderRepository.save(order);
+    public Order placeOrder(OrderItemDTO order) {
+        Order newOrder = new Order(order.getUserId(), order.getOrderDate(), order.getShippingAddress(), order.getOrderTotal());
+        orderRepository.save(newOrder);
 
-        // Step 2: Fetch OrderLines associated with the Order's orderId
-        List<OrderLine> orderLines = orderLineRepository.findByOrderId(savedOrder.getId());
-
-        // Step 3: Optionally, set orderId for each OrderLine
-        for (OrderLine orderLine : orderLines) {
-            orderLine.setOrderId(savedOrder.getId());
+        List<OrderLine> products = order.getOrderItems();
+        for(OrderLine orderLine : products) {
+            orderLine.setOrderId(newOrder.getId());
+            orderLineRepository.save(orderLine);
         }
 
-        // Step 4: Save each OrderLine to the database
-        orderLineRepository.saveAll(orderLines);
-        return savedOrder;
+        System.out.println("The user Id is:" + order.getUserId());
+
+        //Update inventory
+        List<OrderLine> items = order.getOrderItems();
+        for(OrderLine product : items) {
+            int productId = product.getProductItemId();
+            int quantity =product.getQuantity();
+            Optional<Inventory> inventory = inventoryRepository.findById(productId);
+            inventory.get().setQuantity(inventory.get().getQuantity() - quantity);
+        }
+
+
+        //Clear the cart item
+
+
+        ShopCart cartId =  shopCartRepository.findByUserId(order.getUserId());
+        System.out.println("The cartId found:" + cartId.getId());
+        //clear all cart items with this cart id
+        cartRepository.deleteAllByCartId(cartId.getId());
+
+
+
+
+        return newOrder;
     }
 
 }

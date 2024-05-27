@@ -3,6 +3,9 @@ package com.sshproject.bookstore.Controllers;
 import com.sshproject.bookstore.DTO.BookRequestDTO;
 import com.sshproject.bookstore.Entity.Book;
 import com.sshproject.bookstore.Service.BookServiceInterface;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/books")
+@Tag(name = "Books")
 public class BookController {
+
+
 
     @Autowired
     private BookServiceInterface bookService;
@@ -33,6 +39,20 @@ public class BookController {
         }
     }
 
+    @Operation(
+            description = "Get endpoint for books",
+            summary = "Try it out to get the books available from database",
+            responses = {
+                    @ApiResponse(
+                            description = "Success",
+                            responseCode = "200"
+                    ),
+                    @ApiResponse(
+                            description = "Unauthorized / Invalid token",
+                            responseCode = "403"
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<?> getBooks() {
         List<Book> responseBooks = bookService.getBooks();
@@ -65,5 +85,37 @@ public class BookController {
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+    }
+
+//    @GetMapping("/genre/{genreId}")
+//    public ResponseEntity<List<Book>> getBooksByGenre(@PathVariable int genreId) {
+//        List<Book> books = bookService.getBooksByGenre(genreId);
+//        if (books.isEmpty()) {
+//            return ResponseEntity.noContent().build();
+//        } else {
+//            return ResponseEntity.ok(books);
+//        }
+//    }
+
+    //getBooksByGenre
+    //
+//    @GetMapping("/genre/{genresId}")
+//    public ResponseEntity<?> getBooksByGenres(@PathVariable int genresId){
+//        List<Book> books = bookService.getBooksByGenres(genresId);
+//        if(books.isEmpty()){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book not found");
+//        }else {
+//            return ResponseEntity.ok(books);
+//        }
+//    }
+
+    @GetMapping("/genre/{id}/books")
+    public ResponseEntity<List<Book>> getBooksByGenreId(@PathVariable int id){
+        List<Book> books = bookService.getBooksByGenreId(id);
+        if(!books.isEmpty()){
+            return ResponseEntity.ok(books);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(books);
+        }
     }
 }

@@ -1,8 +1,10 @@
 package com.sshproject.bookstore.auth;
 
 import com.sshproject.bookstore.Entity.Role;
+import com.sshproject.bookstore.Entity.ShopCart;
 import com.sshproject.bookstore.Entity.User;
 import com.sshproject.bookstore.Repository.RoleRepository;
+import com.sshproject.bookstore.Repository.ShopCartRepository;
 import com.sshproject.bookstore.Repository.UserRepository;
 import com.sshproject.bookstore.config.JwtService;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +24,7 @@ public class AuthenticationService {
 
     private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final ShopCartRepository shopCartRepository;
 
     private final JwtService jwtService;
 
@@ -36,6 +39,27 @@ public class AuthenticationService {
         }
 
         Role role = roleRepository.findByName("USER");
+        com.sshproject.bookstore.Entity.User user =  new User();
+        user.setEmailAddress(registerRequest.getEmail());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
+        user.setRole(role);
+
+        repository.save(user);
+
+        ShopCart shopCart = new ShopCart(user.getId());
+        shopCartRepository.save(shopCart);
+
+
+
+        return repository.save(user);
+    }
+
+    public com.sshproject.bookstore.Entity.User signup_admin(RegisterRequest registerRequest){
+        if(repository.findByEmailAddress(registerRequest.getEmail()).isPresent()){
+            throw new IllegalArgumentException("Email argument already exists");
+        }
+
+        Role role = roleRepository.findByName("ADMIN");
         com.sshproject.bookstore.Entity.User user =  new User();
         user.setEmailAddress(registerRequest.getEmail());
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));

@@ -1,5 +1,6 @@
 package com.sshproject.bookstore.Controllers;
 
+import com.sshproject.bookstore.DTO.OrderItemDTO;
 import com.sshproject.bookstore.Entity.Order;
 
 import com.sshproject.bookstore.Service.OrderServiceInterface;
@@ -27,7 +28,7 @@ public class OrderController {
     }
 
     @PostMapping("api/v1/orders")
-    public ResponseEntity<?> placeOrder(@RequestBody Order order) {
+    public ResponseEntity<?> placeOrder(@RequestBody OrderItemDTO order) {
         // Save the Order to the database
         Order savedOrder = orderService.placeOrder(order);
 

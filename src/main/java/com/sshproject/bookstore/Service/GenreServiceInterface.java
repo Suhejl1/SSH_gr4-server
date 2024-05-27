@@ -11,4 +11,5 @@ public interface GenreServiceInterface {
     int saveGenre(Genre genre);
     int deleteGenreById(int id);
 
+    int getGenreIdByName(String name);
 }
